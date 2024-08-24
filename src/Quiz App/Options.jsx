@@ -1,20 +1,23 @@
-/* eslint-disable react/prop-types */
+import { useContext } from "react";
+import { QuizContext } from "../Context";
 
-const Options = ({ question, answer, dispatch }) => {
+const Options = () => {
+  const { state, dispatch } = useContext(QuizContext);
+  const currentQuestion = state.questions[state.index];
   return (
     <div>
-      <h1 className="font-bold text-2xl">{question.question}</h1>
+      <h1 className="font-bold text-2xl">{currentQuestion.question}</h1>
       <div className="">
-        {question.options.map((each, index) => (
+        {currentQuestion.options.map((each, index) => (
           <button
             key={each}
-            disabled={answer !== null}
+            disabled={state.answer !== null}
             onClick={() => dispatch({ type: "newAnswer", payload: index })}
             className={`font-semibold text-lg block p-4 rounded-2xl w-1/2 text-left bg-gray-600 my-3 border-2 border-gray-600 duration-300 ${
-              answer === index ? "ml-4" : ""
+              state.answer === index ? "ml-4" : ""
             } ${
-              answer !== null
-                ? index === question.correctOption
+              state.answer !== null
+                ? index === currentQuestion.correctOption
                   ? "bg-green-500"
                   : "bg-red-500"
                 : "hover:ml-4 hover:bg-transparent"

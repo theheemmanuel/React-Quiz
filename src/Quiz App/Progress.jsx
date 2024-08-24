@@ -1,25 +1,21 @@
-/* eslint-disable react/prop-types */
+import { useContext } from "react";
+import { QuizContext } from "../Context";
 
-const Progress = ({
-  points,
-  numberQuestions,
-  questno,
-  totalPoints,
-  answer,
-}) => {
+const Progress = () => {
+  const { state, totalPoints, NumberQuestions } = useContext(QuizContext);
   return (
     <>
       <progress
-        max={numberQuestions}
-        value={questno + Number(answer !== null)}
+        max={NumberQuestions}
+        value={state.index + Number(state.answer !== null)}
         className="w-full overflow-hidden"
       />
       <div className="flex justify-between">
         <p>
-          Question {questno + 1} of {numberQuestions}
+          Question {state.index + 1} of {NumberQuestions}
         </p>
         <p>
-          {points} points/{totalPoints}
+          {state.points} points/{totalPoints}
         </p>
       </div>
     </>

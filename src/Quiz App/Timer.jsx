@@ -1,7 +1,8 @@
-/* eslint-disable react/prop-types */
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { QuizContext } from "../Context";
 
-const Timer = ({ dispatch, timeRemaining }) => {
+const Timer = () => {
+  const { dispatch, state } = useContext(QuizContext);
   useEffect(() => {
     const timee = setInterval(() => {
       dispatch({ type: "tick" });
@@ -10,7 +11,10 @@ const Timer = ({ dispatch, timeRemaining }) => {
   }, [dispatch]);
   return (
     <div className="border p-3 rounded-xl font-bold">
-      {Math.floor(timeRemaining / 60)}:{timeRemaining % 60}
+      {Math.floor(state.timeRemaining / 60)}:{" "}
+      {state.timeRemaining % 60 < 10
+        ? `0${state.timeRemaining % 60}`
+        : state.timeRemaining % 60}
     </div>
   );
 };
